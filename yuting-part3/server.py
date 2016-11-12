@@ -185,8 +185,11 @@ def get_score():
   for result in cursor:
   	score.append(result)
   cursor.close()
-  context=dict(scores=score)
-  return render_template("main.html", **context)
+  context=dict()
+  context['dict']=score
+  context['movie_name']=name
+
+  return render_template("get_score.html", **context)
   
 @app.route('/get_comment',methods=['POST'])
 def get_comment():
@@ -197,8 +200,11 @@ def get_comment():
   for result in cursor:
     comment.append(result['reviews'])  # can also be accessed using result[0]
   cursor.close()
-  context=dict(review=comment)
-  return render_template('main.html',**context)
+  context=dict()
+  context['review']=comment
+  context['movie_name']=name
+  return render_template('get_comment.html',**context)
+
 @app.route('/director')
 def director():
   cursor = g.conn.execute("SELECT staff.name FROM staff JOIN director ON director_id=staff_id")
