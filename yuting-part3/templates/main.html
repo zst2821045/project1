@@ -17,8 +17,6 @@
     {% endfor %}
   </div>
 
-<p><a href="/director">Go to the director page</a></p>
-<p><a href="/actor">Go to the actor page</a></p>
 
 <form method="POST" action="/get_score">
 <p>Get average score of a movie: <input type="text" name="name"> <input type="submit" value="Get"></p>
@@ -31,6 +29,8 @@
   </div>
 <form method="POST" action="/get_comment">
 <p>Get user comment of a movie: <input type="text" name="name"> <input type="submit" value="Get"></p>
+<p>{{ input('username') }}</p>
+
 </form>
    <div>{{review}}</div>
    <div>
@@ -38,5 +38,10 @@
     <div>{{n}}</div>
     {% endfor %}
   </div>
+  
+ 
+<p><a href="/director">Go to the director page</a></p>
+<p><a href="/actor">Go to the actor page</a></p>
+  
 </body>
 </html>
