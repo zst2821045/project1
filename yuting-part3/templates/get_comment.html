@@ -7,14 +7,22 @@
   </style>
   
 <body>
-<h1>Comment of {{movie_name}}</h1>
-
+<h1>Comment</h1>
+<p>movie</p>
+ 
+<div>
+  {% for n in movie_name}
+  <div>{{n}}</div>
+  {% endfor %}
+</div>
+  
 <div>
   {% for n in review}
   <div>{{n}}</div>
   {% endfor %}
-
 </div>
+  
+
 
 
 <p><a href="/actor">Go to the actor page</a></p>
