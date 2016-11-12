@@ -8,9 +8,22 @@
 
 
 <body>
-  <h1>Average Score of {{movie_name}}</h1>
+  <h1>Average score of movie</h1>
 
-<p>{{scores}}</p>
+<p>movie</p>
+<div>
+    {% for n in movie_name %}
+    <div>{{n}}</div>
+    {% endfor %}
+</div>
+
+<p>socre</p>
+
+<div>
+    {% for n in scores %}
+    <div>{{n}}</div>
+    {% endfor %}
+</div>
 
 <p><a href="/actor">Go to the actor page</a></p>
 <p><a href="/director">Go to the director page</a></p>
