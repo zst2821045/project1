@@ -186,7 +186,7 @@ def get_score():
   	score.append(result)
   cursor.close()
   context=dict()
-  context['dict']=score
+  context['scores']=score
   context['movie_name']=name
 
   return render_template("get_score.html", **context)
