@@ -1,0 +1,8 @@
+README.rst
+printer/__init__.py
+printer/cli.py
+printer.egg-info/PKG-INFO
+printer.egg-info/SOURCES.txt
+printer.egg-info/dependency_links.txt
+printer.egg-info/entry_points.txt
+printer.egg-info/top_level.txt

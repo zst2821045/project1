@@ -1,0 +1,4 @@
+
+        [console_scripts]
+        printer=printer.cli:cli
+    
