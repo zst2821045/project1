@@ -253,7 +253,7 @@ def get_comment():
     cursor = g.conn.execute("SELECT movie_id from movie WHERE movie.movie_name= %s", name)
     movie_id=cursor.fetchone()['movie_id']
     redirectlink = '/movieid/'+ str(movie_id[0])+'/Avg-score' 
-    return redirect('/movieid/<movie_id>/comment')
+    return redirect(redirectlink)
 
 @app.route('/movieid/<movie_id>/comment')
 def get_comment_movie(movie_id):
