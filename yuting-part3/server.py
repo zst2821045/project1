@@ -253,7 +253,7 @@ def get_comment():
     movie_id=cursor.fetchone()['movie_id']
     return redirect('/movieid/<movie_id>/comment')
 
-@app.route('/movieid/{{movie_id}}/comment')
+@app.route('/movieid/<movie_id>/comment')
 def get_comment_movie(movie_id):
   comment=[]
   cursor = g.conn.execute("SELECT * FROM feedback JOIN movie ON feedback.movie_id=movie.movie_id WHERE movie.movie_id=%s",movie_id)
