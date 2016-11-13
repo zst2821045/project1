@@ -207,7 +207,6 @@ def get_score():
 
   return render_template("get_score.html", **context)
 
-moviename= "1"
 
 @app.route('/get_comment',methods=['POST'])
 def get_comment():
@@ -224,7 +223,6 @@ def get_comment():
   context=dict()
   context['review']=comment
   context['movie_name']=name
-  moviename=name
   return render_template('get_comment.html',**context)
 
 @app.route('/get_comment/<movie_name>/add',methods=['POST'])
