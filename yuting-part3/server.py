@@ -266,6 +266,8 @@ def get_comment_movie(movie_id):
   context['review']=comment
   cursor = g.conn.execute("SELECT movie_name FROM movie WHERE movie_id=%s",movie_id)
   context['movie_name']=cursor.fetchone()['movie_name']
+  context['movie_id']=movie_id
+
   cursor.close()
   return render_template("get_comment.html", **context)
 
