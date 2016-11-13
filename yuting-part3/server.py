@@ -195,7 +195,6 @@ def display_movie(movie_id):
 @app.route('/get_score',methods=['POST'])
 def get_score():
   name=request.form['name']
-  print name
   score=[]
   cursor = g.conn.execute("SELECT AVG(rate_score) FROM feedback,movie WHERE feedback.movie_id=movie.movie_id and movie.movie_name=%s",name)
   for result in cursor:
@@ -211,32 +210,34 @@ def get_score():
 @app.route('/get_comment',methods=['POST'])
 def get_comment():
     name=request.form['name']
-    return redirect('/get_comment/<name>')
+    cursor = g.conn.execute("SELECT movie_id from movie WHERE movie.movie_name= %s", name)
+    movie_id=cursor.fetchone()['movie_id']
+    
+    return redirect('/get_comment/<movie_id>')
 
-@app.route('/get/comment/<name>')
-def get_comment_for_movie(name):
-  cursor = g.conn.execute("SELECT * FROM feedback JOIN movie ON feedback.movie_id=movie.movie_id WHERE movie.movie_name=%s",name)
+@app.route('/get/comment/<int:movie_id>')
+def get_comment_for_movie(movie_id):
+  cursor = g.conn.execute("SELECT * FROM feedback JOIN movie ON feedback.movie_id=movie.movie_id WHERE movie.movie_id=%s",movie_id)
   comment = []
+  name=[]
   for result in cursor:
-    comment.append(result['reviews'])  # can also be accessed using result[0]
+    comment.append(result['reviews']) 
+    name.append(result['movie_name'])  # can also be accessed using result[0]
   cursor.close()
   context=dict()
   context['review']=comment
   context['movie_name']=name
   return render_template('get_comment.html',**context)
 
-@app.route('/get_comment/<movie_name>/add',methods=['POST'])
-def add_comment(movie_name):
+@app.route('/get_comment/<int:movie_id>/add',methods=['POST'])
+def add_comment(movie_id):
   username=request.form['username']
   comment = request.form['comment']
   rate = request.form['rate']
   time = datetime.datetime.now()
-  cursor1=g.conn.execute("SELECT movie_id FROM movie WHERE movie_name= %s", movie_name)
-  movieid= cursor1.fetchone()['movie_id']
-  cursor = g.conn.execute("INSERT INTO feedback(time, rate_score, review, account,movie_id) VALUES(%s,%s,%s,%s,%s)", time, rate,comment, username, movieid)
+  cursor = g.conn.execute("INSERT INTO feedback(time, rate_score, review, account,movie_id) VALUES(%s,%s,%s,%s,%s)", time, rate,comment, username, movie_id)
   cursor.close()
-  cursor1.close()
-  return redirect('/get_comment/<movie_name>')
+  return redirect('/get_comment/<int:movie_id>')
 
 @app.route('/director')
 def director():
