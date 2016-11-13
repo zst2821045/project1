@@ -222,6 +222,35 @@ def display_movie_director(movie_id):
 @app.route('/get_score',methods=['POST'])
 def get_score():
   name=request.form['name']
+  cursor = g.conn.execute("SELECT movie_id FROM movie WHERE movie_name=%s",name)
+  movie_id=[]
+  for result in cursor:
+    movie_id.append(result['movie_id'])
+  cursor.close()
+  return redirect('/movieid/<movie_id>/Avg-score')
+
+@app.route('/movieid/<movie_id>/Avg-score')
+def get_score_movie():
+  score=[]
+  movie_name=[]
+
+
+  cursor = g.conn.execute("SELECT AVG(rate_score),movie_name FROM feedback,movie WHERE feedback.movie_id=movie.movie_id and movie.movie_id=%s",movie_id)
+  for result in cursor:
+    result=result.items()
+  	score.append(result[0])
+    movie_name.append(result[1])
+
+  cursor.close()
+  
+  context=dict(scores=score)
+  context['movie_name']=movie_name
+
+  return render_template("get_score.html", **context)
+
+@app.route('/movieid/{{movie_id}}/comment',methods=['POST'])
+def get_score():
+  name=request.form['name']
   score=[]
   cursor = g.conn.execute("SELECT AVG(rate_score) FROM feedback,movie WHERE feedback.movie_id=movie.movie_id and movie.movie_name=%s",name)
   for result in cursor:
@@ -230,7 +259,6 @@ def get_score():
   context=dict()
   context['scores']=score
   context['movie_name']=name
-
   return render_template("get_score.html", **context)
 
 
