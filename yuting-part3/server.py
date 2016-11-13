@@ -235,9 +235,9 @@ def get_score_movie():
   movie_name=[]
   cursor = g.conn.execute("SELECT AVG(rate_score),movie_name FROM feedback,movie WHERE feedback.movie_id=movie.movie_id and movie.movie_id=%s",movie_id)
   for result in cursor:
-    result=result.items()
-  	score.append(result[0])
-    movie_name.append(result[1])
+        result=result.items()
+        score.append(result[0])
+        movie_name.append(result[1])
     
   cursor.close()
   context=dict(scores=score)
