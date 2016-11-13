@@ -271,7 +271,7 @@ def actor():
 
 @app.route('/actorid/<id>')
 def display_actor(id):
-  cursor = g.conn.execute("SELECT * FROM staff JOIN actor ON actor_id=staff_id")
+  cursor = g.conn.execute("SELECT * FROM staff JOIN actor ON actor_id=staff_id WHERE actor_id=%s",id)
   result = []
   for n in cursor:
     result.append(n.items())  # can also be accessed using result[0]
