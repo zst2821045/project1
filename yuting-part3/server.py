@@ -212,6 +212,11 @@ moviename= "1"
 @app.route('/get_comment',methods=['POST'])
 def get_comment():
   name=request.form['name']
+  return redirect('/get_comment/<name>')
+
+@app.route('/get_comment/<movie_name>')
+def get_comment():
+  name=request.form['name']
   print name
   cursor = g.conn.execute("SELECT * FROM feedback JOIN movie ON feedback.movie_id=movie.movie_id WHERE movie.movie_name=%s",name)
   comment = []
@@ -224,7 +229,7 @@ def get_comment():
   moviename=name
   return render_template('get_comment.html',**context)
 
-@app.route('/get_comment/add_comment',methods=['POST'])
+@app.route('/get_comment/<movie_name>/add',methods=['POST'])
 def add_comment():
   username=request.form['username']
   comment = request.form['comment']
@@ -235,7 +240,7 @@ def add_comment():
   cursor = g.conn.execute("INSERT INTO feedback(time, rate_score, review, account,movie_id) VALUES(%s,%s,%s,%s,%s)", time, rate,comment, username, movieid)
   cursor.close()
   cursor1.close()
-  return redirect('/get_comment')
+  return redirect('/get_comment/<movie_name>')
 
 @app.route('/director')
 def director():
@@ -249,13 +254,13 @@ def director():
   
 @app.route('/actor')
 def actor():
-  cursor = g.conn.execute("SELECT staff.name FROM staff JOIN actor ON actor_id=staff_id")
+  cursor = g.conn.execute("SELECT * FROM staff JOIN actor ON actor_id=staff_id")
   names = []
   for result in cursor:
-    names.append(result['name'])  # can also be accessed using result[0]
+    names.append(result.items)  # can also be accessed using result[0]
   cursor.close()
   context = dict(data = names)
-  return render_template("director.html",**context)
+  return render_template("display_movie.html",**context)
 
 
 # Example of adding new data to the database
