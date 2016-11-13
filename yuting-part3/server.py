@@ -241,7 +241,7 @@ def add_comment(movie_id):
 
 @app.route('/director')
 def director():
-  cursor = g.conn.execute("SELECT staff.name FROM staff JOIN director ON director_id=staff_id")
+  cursor = g.conn.execute("SELECT * FROM staff JOIN director ON director_id=staff_id")
   result = []
   for n in cursor:
     result.append([n['staff_id'],n['name']])  # can also be accessed using result[0]
