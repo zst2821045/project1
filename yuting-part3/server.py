@@ -130,7 +130,9 @@ def index():
   #
   cursor = g.conn.execute("SELECT movie_id, movie_name FROM movie")
   data = []
+  line=1
   for result in cursor:
+    line=result
     data.append([result['movie_id'],result['movie_name']])  # can also be accessed using result[0]
   cursor.close()
   #
@@ -161,7 +163,7 @@ def index():
   #
   context = dict(movie_info = data)
   context['cursor'] = cursor
-  context['cursor_line']=cursor[0]
+  context['cursor_line']=line
 
 
 
