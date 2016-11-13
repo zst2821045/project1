@@ -162,8 +162,10 @@ def index():
   #     {% endfor %}
   #
   context = dict(movie_info = data)
-  context['cursor'] = cursor
-  context['cursor_line']=line
+  context['type_cursor'] = type(cursor)
+  context['cursor_line']=type(line)
+  context['line']=line
+
 
 
 
