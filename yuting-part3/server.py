@@ -230,7 +230,7 @@ def get_score():
   return redirect('/movieid/<movie_id>/Avg-score')
 
 @app.route('/movieid/<movie_id>/Avg-score')
-def get_score_movie():
+def get_score_movie(movie_id):
   score=[]
   movie_name=[]
   cursor = g.conn.execute("SELECT AVG(rate_score),movie_name FROM feedback,movie WHERE feedback.movie_id=movie.movie_id and movie.movie_id=%s",movie_id)
