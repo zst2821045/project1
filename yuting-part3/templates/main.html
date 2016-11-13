@@ -8,7 +8,7 @@
 
 
 <body>
-  <h1>Top ten movie from IMDB</h1>
+  <h1>Movies from IMDB</h1>
  
 
   <div>
@@ -18,6 +18,11 @@
     </div>
     {% endfor %}
   </div>
+
+<p>type_cursor<{{type(cursor)}}</p>
+<p>type_line<{{type(cursor_line)}}</p>
+<p>type_data<{{type()}}</p>
+<p>type_data<{{type()}}</p>
 
 
 <form method="POST" action="/get_score">
