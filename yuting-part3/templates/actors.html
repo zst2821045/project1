@@ -9,11 +9,10 @@
 
 <body>
   <h1>Actors Page</h1>
-  <div>{{data}}</div>
 
   <div>
-    {% for n in data %}
-    <div>{{n}}</div>
+    {% for n in result %}
+  <p><a href="/actorid/{{n[0]}}">{{n[1]}}</a></p>
     {% endfor %}
   </div>
 <form method="POST" action="/actor/add_actor">
