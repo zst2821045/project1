@@ -12,6 +12,7 @@
 
   <div>
     {% for n in items %}
+      <p>{{n}}</p>
   <p>{{n['role']}}<a href="/actorid/{{n['staff_id']}}">{{n['name']}}</a></p>
     {% endfor %}
   </div>
