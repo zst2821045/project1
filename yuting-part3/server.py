@@ -235,7 +235,7 @@ def add_comment():
   cursor = g.conn.execute("INSERT INTO feedback(time, rate_score, review, account,movie_id) VALUES(%s,%s,%s,%s,%s)", time, rate,comment, username, movieid)
   cursor.close()
   cursor1.close()
-  return redirect('get_comment.html')
+  return redirect('/get_comment')
 
 @app.route('/director')
 def director():
