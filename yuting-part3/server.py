@@ -207,20 +207,6 @@ def display_movie_actor(movie_id):
     context['movie_name']= movie_name
     return render_template("movie_actor.html", **context)
 
-@app.route('/movieid/<movie_id>/director')
-def display_movie_director(movie_id):
-    cursor = g.conn.execute("SELECT * from movie WHERE movie.movie_id= %s", movie_id)
-    result=cursor.fetchone()
-    context= dict(items=result.items())
-    context['attr']= result.keys()
-    cursor.close()
-    context['movie_id']= movie_id
-    cursor = g.conn.execute("SELECT movie_name from movie WHERE movie_id= %s", movie_id)
-    movie_name=cursor.fetchon()['movie_name']
-    context= dict(items= result)
-    context['movie_id']= movie_id
-    context['movie_name']= movie_name
-    return render_template("display_movie.html", **context)
 
 @app.route('/movieid/<movie_id>/director')
 def display_movie_director(movie_id):
