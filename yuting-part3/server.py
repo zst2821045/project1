@@ -231,7 +231,7 @@ def add_comment():
   comment = request.form['comment']
   rate = request.form['rate']
   time = datetime.datetime.now()
-  cursor1=g.conn.execute("SELECT movie_id FROM movie WHERE movie_name= %s", moviename)
+  cursor1=g.conn.execute("SELECT movie_id FROM movie WHERE movie_name= %s", movie_name)
   movieid= cursor1.fetchone()['movie_id']
   cursor = g.conn.execute("INSERT INTO feedback(time, rate_score, review, account,movie_id) VALUES(%s,%s,%s,%s,%s)", time, rate,comment, username, movieid)
   cursor.close()
