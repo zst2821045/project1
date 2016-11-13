@@ -280,7 +280,7 @@ def add_comment(movie_id):
   time = datetime.datetime.now()
   cursor = g.conn.execute("INSERT INTO feedback(time, rate_score, reviews, account,movie_id) VALUES(%s,%s,%s,%s,%s)", time, rate,comment, username, movie_id)
   cursor.close()
-  link='/get_comment/'+str(movie_id)
+  link='/movieid/'+str(movie_id)+'/comment'
   return redirect(link)
 
 @app.route('/director')
