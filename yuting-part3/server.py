@@ -247,7 +247,7 @@ def director():
     result.append([n['director_id'],n['name']])  # can also be accessed using result[0]
   cursor.close()
   context=dict(result=result)
-  return render_template("display_movie.html",**context)
+  return render_template("director.html",**context)
 
 @app.route('/directorid/<id>')
 def display_movie(id):
@@ -267,7 +267,7 @@ def actor():
     result.append([n['actor_id'],n['name']])  # can also be accessed using result[0]
   cursor.close()
   context=dict(result=result)
-  return render_template("display_movie.html",**context)
+  return render_template("actor.html",**context)
 
 @app.route('/actorid/<id>')
 def display_actor(id):
