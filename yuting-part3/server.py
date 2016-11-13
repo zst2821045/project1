@@ -201,7 +201,7 @@ def display_movie_actor(movie_id):
         result.append([n['staff_id'],n['name'],n['role']])  # can also be accessed using result[0]
     cursor.close()
     cursor = g.conn.execute("SELECT movie_name from movie WHERE movie_id= %s", movie_id)
-    movie_name=cursor.fetchon()['movie_name']
+    movie_name=cursor.fetchone()['movie_name']
     context= dict(items= result)
     context['movie_id']= movie_id
     context['movie_name']= movie_name
