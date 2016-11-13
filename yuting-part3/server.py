@@ -160,6 +160,9 @@ def index():
   #     {% endfor %}
   #
   context = dict(movie_info = data)
+  context['cursor'] = cursor
+  context['cursor_line']=cursor[0]
+
 
 
   #
