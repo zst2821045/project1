@@ -165,6 +165,11 @@ def index():
   context['type_cursor'] = type(cursor)
   context['cursor_line']=type(line)
   context['line']=line
+  context['keys']=line.keys()
+  context['keys_type']=type(line.keys())
+  context['items']=line.items()  
+  context['items_type']=type(line.items())
+
 
 
 
