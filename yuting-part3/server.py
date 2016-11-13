@@ -162,13 +162,6 @@ def index():
   #     {% endfor %}
   #
   context = dict(movie_info = data)
-  context['type_cursor'] = type(cursor)
-  context['cursor_line']=type(line)
-  context['line']=line
-  context['keys']=line.keys()
-  context['keys_type']=type(line.keys())
-  context['items']=line.items()  
-  context['items_type']=type(line.items())
 
 
 
@@ -188,10 +181,13 @@ def index():
 # notice that the functio name is another() rather than index()
 # the functions for each app.route needs to have different names
 #
-@app.route('/movie/<movie_id>')
+@app.route('/movieid/<movie_id>')
 def display_movie(movie_id):
-    pass
-
+    cursor = g.conn.execute("SELECT * from movie WHERE movie.movie_id= %s", movie_id)
+    result=cursor.fetchone()
+    context= dict(items=result.items())
+    context['attr']= result.keys()
+    return render_template("display_movie.html", **context)
 
 @app.route('/get_score',methods=['POST'])
 def get_score():
