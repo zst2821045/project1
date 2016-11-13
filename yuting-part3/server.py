@@ -128,10 +128,10 @@ def index():
   #
   # example of a database query
   #
-  cursor = g.conn.execute("SELECT movie_name FROM movie")
-  names = []
+  cursor = g.conn.execute("SELECT movie_id, movie_name FROM movie")
+  data = []
   for result in cursor:
-    names.append(result['movie_name'])  # can also be accessed using result[0]
+    data.append([result['movie_id'],result['movie_name']])  # can also be accessed using result[0]
   cursor.close()
   #
   # Flask uses Jinja templates, which is an extension to HTML where you can
@@ -159,7 +159,7 @@ def index():
   #     <div>{{n}}</div>
   #     {% endfor %}
   #
-  context = dict(data = names)
+  context = dict(movie_info = data)
 
 
   #
@@ -176,6 +176,11 @@ def index():
 # notice that the functio name is another() rather than index()
 # the functions for each app.route needs to have different names
 #
+@app.route('/movie/<movie_id>')
+def display_movie(movie_id):
+    pass
+
+
 @app.route('/get_score',methods=['POST'])
 def get_score():
   name=request.form['name']
