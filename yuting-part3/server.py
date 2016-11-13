@@ -270,7 +270,7 @@ def get_comment_movie(movie_id):
   return render_template("get_comment.html", **context)
 
 
-@app.route('/get_comment/<int:movie_id>/add',methods=['POST'])
+@app.route('/movieid/<movie_id>/comment/add',methods=['POST'])
 def add_comment(movie_id):
   username=request.form['username']
   comment = request.form['comment']
@@ -278,7 +278,8 @@ def add_comment(movie_id):
   time = datetime.datetime.now()
   cursor = g.conn.execute("INSERT INTO feedback(time, rate_score, review, account,movie_id) VALUES(%s,%s,%s,%s,%s)", time, rate,comment, username, movie_id)
   cursor.close()
-  return redirect('/get_comment/<int:movie_id>')
+  link=''/get_comment/'+str(movie_id)
+  return redirect(link)
 
 @app.route('/director')
 def director():
