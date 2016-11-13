@@ -242,21 +242,41 @@ def add_comment(movie_id):
 @app.route('/director')
 def director():
   cursor = g.conn.execute("SELECT staff.name FROM staff JOIN director ON director_id=staff_id")
-  names = []
-  for result in cursor:
-    names.append(result['name'])  # can also be accessed using result[0]
+  result = []
+  for n in cursor:
+    result.append([n['director_id'],n['name']])  # can also be accessed using result[0]
   cursor.close()
-  context=dict(data=names)
-  return render_template("director.html",**context)
-  
+  context=dict(result=result)
+  return render_template("display_movie.html",**context)
+
+@app.route('/directorid/<id>')
+def display_movie(id):
+  cursor = g.conn.execute("SELECT * FROM staff JOIN director ON director_id=staff_id WHERE director_id=%s", id)
+  result = []
+  for n in cursor:
+    result.append(n.items())  # can also be accessed using result[0]
+  cursor.close()
+  context=dict(items=result)
+  return render_template("display_movie.html",**context)
+
 @app.route('/actor')
 def actor():
-  cursor = g.conn.execute("SELECT * FROM staff JOIN actor ON actor_id=staff_id")
-  names = []
-  for result in cursor:
-    names.append(result.items)  # can also be accessed using result[0]
+  cursor = g.conn.execute("SELECT * FROM staff JOIN actor ON actor=staff_id")
+  result = []
+  for n in cursor:
+    result.append([n['actor_id'],n['name']])  # can also be accessed using result[0]
   cursor.close()
-  context = dict(data = names)
+  context=dict(result=result)
+  return render_template("display_movie.html",**context)
+
+@app.route('/actorid/<id>')
+def display_actor(id):
+  cursor = g.conn.execute("SELECT * FROM staff JOIN actor ON actor_id=staff_id")
+  result = []
+  for n in cursor:
+    result.append(n.items())  # can also be accessed using result[0]
+  cursor.close()
+  context = dict(items = result)
   return render_template("display_movie.html",**context)
 
 
