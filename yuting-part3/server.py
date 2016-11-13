@@ -250,7 +250,7 @@ def director():
   return render_template("director.html",**context)
 
 @app.route('/directorid/<id>')
-def display_movie(id):
+def display_director(id):
   cursor = g.conn.execute("SELECT * FROM staff JOIN director ON director_id=staff_id WHERE director_id=%s", id)
   result = []
   for n in cursor:
