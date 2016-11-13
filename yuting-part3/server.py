@@ -227,6 +227,7 @@ def get_score():
   for result in cursor:
     movie_id.append(result['movie_id'])
   cursor.close()
+  movie_id=movie_id[0]
   return redirect('/movieid/<movie_id>/Avg-score')
 
 @app.route('/movieid/<movie_id>/Avg-score')
@@ -251,6 +252,8 @@ def get_comment():
     name=request.form['name']
     cursor = g.conn.execute("SELECT movie_id from movie WHERE movie.movie_name= %s", name)
     movie_id=cursor.fetchone()['movie_id']
+    movie_id=movie_id[0]
+
     return redirect('/movieid/<movie_id>/comment')
 
 @app.route('/movieid/<movie_id>/comment')
