@@ -223,7 +223,7 @@ def display_movie_director(movie_id):
     return render_template("display_movie.html", **context)
 
 @app.route('/movieid/<movie_id>/director')
-def display_movie_actor(movie_id):
+def display_movie_director(movie_id):
     cursor = g.conn.execute("SELECT staff_id, name from direct,staff WHERE director_id=staff_id AND movie_id= %s", movie_id)
     result=[]
     for n in cursor:
