@@ -232,16 +232,15 @@ def get_score():
 @app.route('/movieid/<movie_id>/Avg-score')
 def get_score_movie(movie_id):
   score=[]
-  movie_name=[]
-  cursor = g.conn.execute("SELECT AVG(rate_score),movie_name FROM feedback,movie WHERE feedback.movie_id=movie.movie_id and movie.movie_id=%s",movie_id)
+  cursor = g.conn.execute("SELECT AVG(rate_score) FROM feedback,movie WHERE feedback.movie_id=movie.movie_id and movie.movie_id=%s",movie_id)
   for result in cursor:
         result=result.items()
         score.append(result[0])
-        movie_name.append(result[1])
-    
   cursor.close()
   context=dict(scores=score)
-  context['movie_name']=movie_name
+  cursor = g.conn.execute("SELECT movie_name FROM movie WHERE movie_id=%s",movie_id)
+  context['movie_name']=cursor.fetchone()['movie_name']
+  cursor.close()
 
   return render_template("get_score.html", **context)
 
