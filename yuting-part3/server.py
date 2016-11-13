@@ -184,13 +184,54 @@ def index():
 #
 @app.route('/movieid/<movie_id>')
 def display_movie(movie_id):
+    cursor = g.conn.execute("SELECT * from movie WHERE movie.movie_id= %s",  movie_id)
+    result=cursor.fetchone()
+    context= dict(items=result.items())
+    context['attr']= result.keys()
+    context['movie_id']= movie_id
+
+    cursor.close()
+    return render_template("display_movie.html", **context)
+
+@app.route('/movieid/<movie_id>/actor')
+def display_movie_actor(movie_id):
+    cursor = g.conn.execute("SELECT staff_id, name, role from act,staff WHERE actor_id=staff_id AND movie_id= %s", movie_id)
+    result=[]
+    for n in cursor:
+        result.append([n['staff_id'],n['name'],n['role']])  # can also be accessed using result[0]
+    cursor.close()
+    cursor = g.conn.execute("SELECT movie_name from movie WHERE movie_id= %s", movie_id)
+    movie_name=cursor.fetchon()['movie_name']
+    context= dict(items= result)
+    context['movie_id']= movie_id
+    context['movie_name']= movie_name
+    return render_template("movie_actor.html", **context)
+
+@app.route('/movieid/<movie_id>/director')
+def display_movie_director(movie_id):
     cursor = g.conn.execute("SELECT * from movie WHERE movie.movie_id= %s", movie_id)
     result=cursor.fetchone()
     context= dict(items=result.items())
     context['attr']= result.keys()
     cursor.close()
-
+    context['movie_id']= movie_id
+    cursor = g.conn.execute("SELECT movie_name from movie WHERE movie_id= %s", movie_id)
+    movie_name=cursor.fetchon()['movie_name']
+    context= dict(items= result)
+    context['movie_id']= movie_id
+    context['movie_name']= movie_name
     return render_template("display_movie.html", **context)
+
+@app.route('/movieid/<movie_id>/director')
+def display_movie_actor(movie_id):
+    cursor = g.conn.execute("SELECT staff_id, name from direct,staff WHERE director_id=staff_id AND movie_id= %s", movie_id)
+    result=[]
+    for n in cursor:
+        result.append([n['staff_id'],n['name']])  # can also be accessed using result[0]
+    cursor.close()
+    context= dict(items= result)
+    context['movie_id']= movie_id
+    return render_template("movie_director.html", **context)
 
 @app.route('/get_score',methods=['POST'])
 def get_score():
@@ -227,6 +268,7 @@ def get_comment_for_movie(movie_id):
   context=dict()
   context['review']=comment
   context['movie_name']=name
+  context['movie_id']= movie_id
   return render_template('get_comment.html',**context)
 
 @app.route('/get_comment/<int:movie_id>/add',methods=['POST'])
@@ -255,7 +297,7 @@ def display_director(id):
   result=cursor.fetchone()
   cursor.close()
   context=dict(items=result.items())
-  return render_template("display_movie.html",**context)
+  return render_template("display.html",**context)
 
 @app.route('/actor')
 def actor():
@@ -273,7 +315,7 @@ def display_actor(id):
   result=cursor.fetchone()
   cursor.close()
   context=dict(items=result.items())
-  return render_template("display_movie.html",**context)
+  return render_template("display.html",**context)
 
 
 # Example of adding new data to the database
