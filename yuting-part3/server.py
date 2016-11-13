@@ -244,7 +244,7 @@ def director():
   cursor = g.conn.execute("SELECT staff.name FROM staff JOIN director ON director_id=staff_id")
   result = []
   for n in cursor:
-    result.append([n['director_id'],n['name']])  # can also be accessed using result[0]
+    result.append([n['staff_id'],n['name']])  # can also be accessed using result[0]
   cursor.close()
   context=dict(result=result)
   return render_template("director.html",**context)
@@ -261,10 +261,10 @@ def display_director(id):
 
 @app.route('/actor')
 def actor():
-  cursor = g.conn.execute("SELECT * FROM staff JOIN actor ON actor=staff_id")
+  cursor = g.conn.execute("SELECT * FROM staff JOIN actor ON actor_id=staff_id")
   result = []
   for n in cursor:
-    result.append([n['actor_id'],n['name']])  # can also be accessed using result[0]
+    result.append([n['staff_id'],n['name']])  # can also be accessed using result[0]
   cursor.close()
   context=dict(result=result)
   return render_template("actor.html",**context)
