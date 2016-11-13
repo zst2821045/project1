@@ -232,7 +232,7 @@ def add_comment():
   time = datetime.datetime.now()
   cursor1=g.conn.execute("SELECT movie_id FROM movie WHERE movie_name= %s", moviename)
   movieid= cursor1.fetchone()['movie_id']
-  cursor = g.conn.execute("INSERT INTO feedback(time, rate_score, review, account,movie_id) VALUES(%s,%s,%s,%s,%s)" time, rate,comment, username, movieid)
+  cursor = g.conn.execute("INSERT INTO feedback(time, rate_score, review, account,movie_id) VALUES(%s,%s,%s,%s,%s)", time, rate,comment, username, movieid)
   cursor.close()
   cursor1.close()
   return redirect('get_comment.html')
