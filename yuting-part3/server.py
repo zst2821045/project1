@@ -245,8 +245,18 @@ def get_score_movie():
 
   return render_template("get_score.html", **context)
 
+
+
+@app.route('/get_comment',methods=['POST'])
+def get_comment():
+    name=request.form['name']
+    cursor = g.conn.execute("SELECT movie_id from movie WHERE movie.movie_name= %s", name)
+    movie_id=cursor.fetchone()['movie_id']
+    
+    return redirect('/get_comment/<movie_id>')
+
 @app.route('/movieid/{{movie_id}}/comment',methods=['POST'])
-def get_score():
+def get_comment_movie():
   name=request.form['name']
   score=[]
   cursor = g.conn.execute("SELECT AVG(rate_score) FROM feedback,movie WHERE feedback.movie_id=movie.movie_id and movie.movie_name=%s",name)
@@ -258,14 +268,6 @@ def get_score():
   context['movie_name']=name
   return render_template("get_score.html", **context)
 
-
-@app.route('/get_comment',methods=['POST'])
-def get_comment():
-    name=request.form['name']
-    cursor = g.conn.execute("SELECT movie_id from movie WHERE movie.movie_name= %s", name)
-    movie_id=cursor.fetchone()['movie_id']
-    
-    return redirect('/get_comment/<movie_id>')
 
 @app.route('/get/comment/<int:movie_id>')
 def get_comment_for_movie(movie_id):
