@@ -227,8 +227,8 @@ def get_score():
   for result in cursor:
     movie_id.append(result['movie_id'])
   cursor.close()
-  movie_id=movie_id[0]
-  return redirect('/movieid/<movie_id>/Avg-score')
+  print movie_id[0]
+  return redirect('/movieid/1/Avg-score')
 
 @app.route('/movieid/<movie_id>/Avg-score')
 def get_score_movie(movie_id):
