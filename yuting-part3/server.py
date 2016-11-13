@@ -252,8 +252,7 @@ def get_comment():
     name=request.form['name']
     cursor = g.conn.execute("SELECT movie_id from movie WHERE movie.movie_name= %s", name)
     movie_id=cursor.fetchone()['movie_id']
-    movie_id=movie_id[0]
-
+    redirectlink = '/movieid/'+ str(movie_id[0])+'/Avg-score' 
     return redirect('/movieid/<movie_id>/comment')
 
 @app.route('/movieid/<movie_id>/comment')
@@ -270,21 +269,6 @@ def get_comment_movie(movie_id):
   cursor.close()
   return render_template("get_comment.html", **context)
 
-
-@app.route('/get/comment/<int:movie_id>')
-def get_comment_for_movie(movie_id):
-  cursor = g.conn.execute("SELECT * FROM feedback JOIN movie ON feedback.movie_id=movie.movie_id WHERE movie.movie_id=%s",movie_id)
-  comment = []
-  name=[]
-  for result in cursor:
-    comment.append(result['reviews']) 
-    name.append(result['movie_name'])  # can also be accessed using result[0]
-  cursor.close()
-  context=dict()
-  context['review']=comment
-  context['movie_name']=name
-  context['movie_id']= movie_id
-  return render_template('get_comment.html',**context)
 
 @app.route('/get_comment/<int:movie_id>/add',methods=['POST'])
 def add_comment(movie_id):
