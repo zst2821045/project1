@@ -278,7 +278,7 @@ def add_comment(movie_id):
   comment = request.form['comment']
   rate = request.form['rate']
   time = datetime.datetime.now()
-  cursor = g.conn.execute("INSERT INTO feedback(time, rate_score, review, account,movie_id) VALUES(%s,%s,%s,%s,%s)", time, rate,comment, username, movie_id)
+  cursor = g.conn.execute("INSERT INTO feedback(time, rate_score, reviews, account,movie_id) VALUES(%s,%s,%s,%s,%s)", time, rate,comment, username, movie_id)
   cursor.close()
   link='/get_comment/'+str(movie_id)
   return redirect(link)
