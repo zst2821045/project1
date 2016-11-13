@@ -214,7 +214,7 @@ def get_comment():
   return redirect('/get_comment/<name>')
 
 @app.route('/get_comment/<name>')
-def get_comment():
+def get_comment_for_movie(name):
   cursor = g.conn.execute("SELECT * FROM feedback JOIN movie ON feedback.movie_id=movie.movie_id WHERE movie.movie_name=%s",name)
   comment = []
   for result in cursor:
@@ -226,7 +226,7 @@ def get_comment():
   return render_template('get_comment.html',**context)
 
 @app.route('/get_comment/<movie_name>/add',methods=['POST'])
-def add_comment():
+def add_comment(movie_name):
   username=request.form['username']
   comment = request.form['comment']
   rate = request.form['rate']
