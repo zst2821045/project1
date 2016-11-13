@@ -205,7 +205,9 @@ def get_score():
   context['movie_name']=name
 
   return render_template("get_score.html", **context)
-  
+
+moviename= "1"
+
 @app.route('/get_comment',methods=['POST'])
 def get_comment():
   name=request.form['name']
@@ -218,7 +220,20 @@ def get_comment():
   context=dict()
   context['review']=comment
   context['movie_name']=name
+  moviename=name
   return render_template('get_comment.html',**context)
+
+@app.route('/get_comment/add_comment',methods=['POST'])
+def add_comment():
+  username=request.form['username']
+  comment = request.form['comment']
+  rate = request.form['rate']
+  cursor1=g.conn.execute("SELECT movie_id FROM movie WHERE movie_name= %s", moviename)
+  movieid= cursor1.fetchone()['movie_id']
+  cursor = g.conn.execute("INSERT INTO feedback(time, rate_score, review, account,movie_id) VALUES(%s,%s,%s,%s,%s)" time, rate,comment, username, movieid)
+  cursor.close()
+  cursor1.close()
+  return redirect('get_comment.html')
 
 @app.route('/director')
 def director():
