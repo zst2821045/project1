@@ -187,6 +187,8 @@ def display_movie(movie_id):
     result=cursor.fetchone()
     context= dict(items=result.items())
     context['attr']= result.keys()
+    cursor.close()
+
     return render_template("display_movie.html", **context)
 
 @app.route('/get_score',methods=['POST'])
