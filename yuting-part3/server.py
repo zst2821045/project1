@@ -210,10 +210,10 @@ def get_score():
 
 @app.route('/get_comment',methods=['POST'])
 def get_comment():
-  name=request.form['name']
-  return redirect('/get_comment/<name>')
+    name=request.form['name']
+    return redirect('/get_comment/<name>')
 
-@app.route('/get_comment/<name>')
+@app.route('get/comment/<name>')
 def get_comment_for_movie(name):
   cursor = g.conn.execute("SELECT * FROM feedback JOIN movie ON feedback.movie_id=movie.movie_id WHERE movie.movie_name=%s",name)
   comment = []
