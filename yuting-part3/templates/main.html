@@ -13,7 +13,9 @@
 
   <div>
     {% for n in data %}
-    <div>{{n}}</div>
+    <div>
+    <p><a href="/{{n}}">{{n}}</a></p>
+    </div>
     {% endfor %}
   </div>
 
@@ -35,6 +37,7 @@
     <div>{{n}}</div>
     {% endfor %}
   </div>
+  
   
  
 <p><a href="/director">Go to the director page</a></p>
