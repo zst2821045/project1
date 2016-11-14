@@ -1,4 +1,0 @@
-
-        [printer.plugins]
-        bold=printer_bold.core:bolddddddddddd
-    
