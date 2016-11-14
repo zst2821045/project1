@@ -213,6 +213,20 @@ def display_movie_director(movie_id):
     context['movie_id']= movie_id
     context['movie_name']= movie_name
     return render_template("movie_director.html", **context)
+
+@app.route('/movieid/<movie_id>/similar_movie')
+def display_similar_movie(movie_id):
+    cursor = g.conn.execute("SELECT b.movie_name FROM movie as a, movie as b, similar_movie WHERE movie_1=a.movie_id AND movie_2=b.movie_id AND a.movie_id= %s", movie_id)
+    result=[]
+    for n in cursor:
+        result.append(n['movie_name'])  # can also be accessed using result[0]
+    cursor.close()
+    cursor = g.conn.execute("SELECT movie_name from movie WHERE movie_id= %s", movie_id)
+    movie_name=cursor.fetchone()['movie_name']
+    context= dict(items= result)
+    context['movie_id']= movie_id
+    context['movie_name']= movie_name
+    return render_template("similar_movie.html", **context)
     
 @app.route('/movieid/<movie_id>/award')
 def display_movie_award(movie_id):
